@@ -1,6 +1,6 @@
 package io.github.nullptrx.obfuscator;
 
-public class X {
+public class XOR {
 
   public static byte[] e(byte[] bytes) {
     //根据默认编码获取字节数组

@@ -27,7 +27,7 @@ apply plugin: 'obfuscator'
 obfuscator {
     str {
         packages = ["io.github.nullptrx.library"]
-        implementation = 'io.github.nullptrx.obfuscator.X'
+        implementation = 'io.github.nullptrx.obfuscator.XOR'
         // random or fixed
         mode = "random"
         randomPassword = 32
