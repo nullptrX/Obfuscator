@@ -1,0 +1,24 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+group = GROUP
+archivesBaseName = ARTIFACTID
+version = VERSION
+
+publishing {
+    repositories {
+        maven {
+            allowInsecureProtocol = true
+            url = uri("${rootProject.projectDir}/maven")
+        }
+    }
+}
+
+apply from: "${rootProject.projectDir}/nexus.gradle"
