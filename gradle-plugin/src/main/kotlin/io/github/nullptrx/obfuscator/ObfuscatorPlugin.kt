@@ -5,7 +5,6 @@ import org.gradle.api.Project
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.TestedExtension
-import java.util.*
 
 
 class ObfuscatorPlugin : Plugin<Project> {
