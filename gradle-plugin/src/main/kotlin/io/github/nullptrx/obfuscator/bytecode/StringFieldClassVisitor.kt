@@ -2,7 +2,6 @@ package io.github.nullptrx.obfuscator.bytecode
 
 import io.github.nullptrx.obfuscator.extension.StrExtension
 import org.objectweb.asm.*
-import java.util.logging.Logger
 
 class StringFieldClassVisitor(cw: ClassVisitor, val extension: StrExtension) :
   ClassVisitor(Opcodes.ASM5, cw) {
@@ -137,16 +136,13 @@ class StringFieldClassVisitor(cw: ClassVisitor, val extension: StrExtension) :
 
 
   override fun visitEnd() {
-    if (!isClInitExists && !staticFinalFields.isEmpty()) {
+    if (!isClInitExists && staticFinalFields.isNotEmpty()) {
       val mv = super.visitMethod(Opcodes.ACC_STATIC, "<clinit>", "()V", null, null)
       mv.visitCode()
       // Here init static final fields.
       for (field in staticFinalFields) {
-        val str = field.value
-        if (str == null || str.isEmpty()) {
-          continue // It could not be happened
-        }
-        encode(mv, str)
+        val value = field.value ?: continue // It could not be happened
+        encode(mv, value)
         mv.visitFieldInsn(Opcodes.PUTSTATIC, className, field.name, ClassStringField.STRING_DESC)
       }
       mv.visitInsn(Opcodes.RETURN)

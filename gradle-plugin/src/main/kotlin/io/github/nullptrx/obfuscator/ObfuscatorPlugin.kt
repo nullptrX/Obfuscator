@@ -10,7 +10,6 @@ import java.util.*
 
 class ObfuscatorPlugin : Plugin<Project> {
   override fun apply(project: Project) {
-
     val extension = project.extensions.getByType(TestedExtension::class.java)
     if (extension is AppExtension) {
       extension.registerTransform(ObfuscatorTransform(project, true))

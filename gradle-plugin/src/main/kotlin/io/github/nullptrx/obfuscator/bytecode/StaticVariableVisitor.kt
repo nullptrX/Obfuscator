@@ -5,10 +5,10 @@ import org.objectweb.asm.Opcodes
 
 class StaticVariableVisitor(
   mv: MethodVisitor,
-  val visitor: StringFieldClassVisitor,
-  val className: String?,
-  val staticFinalFields: List<ClassStringField>,
-  val staticFields: List<ClassStringField>,
+  private val visitor: StringFieldClassVisitor,
+  private val className: String?,
+  private val staticFinalFields: List<ClassStringField>,
+  private val staticFields: List<ClassStringField>,
 ) : MethodVisitor(Opcodes.ASM5, mv) {
 
   private var lastStashCst: String = ""
@@ -16,13 +16,9 @@ class StaticVariableVisitor(
   override fun visitCode() {
     super.visitCode()
     // Here init static final fields.
-    for (field in staticFields) {
-      val value = field.value
-      if (value == null || value.isEmpty()) {
-        continue
-      }
+    for (field in staticFinalFields) {
+      val value = field.value ?: continue
       visitor.encode(super.mv, value)
-
       super.visitFieldInsn(Opcodes.PUTSTATIC, className, field.name, ClassStringField.STRING_DESC)
     }
   }
@@ -42,7 +38,7 @@ class StaticVariableVisitor(
     if (className == owner && lastStashCst.isEmpty()) {
       var isContain = false
       for (field in staticFields) {
-        if (field.name.equals(name)) {
+        if (field.name == name) {
           isContain = true
           break
         }

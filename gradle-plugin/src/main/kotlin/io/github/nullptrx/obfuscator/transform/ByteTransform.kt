@@ -85,7 +85,7 @@ abstract class ByteTransform(
     //   name + " isIncremental = " + isIncremental + ", taskVariant = "
     //       + taskVariant + ", emptyRun = " + emptyRun + ", inDuplicatedClassSafeMode = " + inDuplicatedClassSafeMode()
     // )
-    val startTime = System.currentTimeMillis()
+    // val startTime = System.currentTimeMillis()
     if (!isIncremental) {
       outputProvider.deleteAll()
     }
