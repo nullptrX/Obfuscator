@@ -86,7 +86,7 @@ dependencyResolutionManagement {
 
 
 
-配置插件参数
+对应module的`build.gradle`配置插件参数
 
 ```groovy
 
@@ -97,7 +97,7 @@ obfuscator {
     // 包名
     packages = ['a.b.c']
     // 加密库实现
-    implementation = 'x.y.z.XOR'
+    implementation = 'io.github.nullptrx.obfuscator.XOR'
     // 模式 random(随机生成密码)/fixed(固定字符串密码)
     mode = "random"
     // 随机密码长度
@@ -107,6 +107,10 @@ obfuscator {
   }
 }
 
+dependencies {
+  // 使用依赖导入加密库
+  implementation 'io.github.nullptrx.obfuscator:xor:1.0.0'
+}
 ```
 
 
