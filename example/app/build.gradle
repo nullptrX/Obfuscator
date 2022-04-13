@@ -22,15 +22,13 @@ plugins {
 }
 
 apply plugin: 'obfuscator'
-
+// import io.github.nullptrx.obfuscator.kg.RandomKeyGenerator
 obfuscator {
     str {
         packages = ["io.github.nullptrx.app"]
-        implementation = 'io.github.nullptrx.obfuscator.X'
-        // random or fixed
-        mode = "random"
-        randomPassword = 32
-        fixedPassword = "abc"
+        implementation = 'io.github.nullptrx.obfuscator.XOR'
+        password = Class.forName('io.github.nullptrx.obfuscator.kg.RandomKeyGenerator').newInstance()
+        // password = new RandomKeyGenerator()
     }
 }
 
@@ -62,6 +60,6 @@ android {
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation project(':example:library')
 }

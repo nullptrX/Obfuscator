@@ -12,8 +12,8 @@ buildscript {
 
     }
     dependencies {
-        classpath 'io.github.nullptrx.obfuscator:gradle-plugin:1.0.0'
-        classpath 'io.github.nullptrx.obfuscator:xor:1.0.0'
+        // classpath 'io.github.nullptrx.obfuscator:gradle-plugin:1.0.0'
+        // classpath 'io.github.nullptrx.obfuscator:xor:1.0.0'
     }
 }
 
@@ -22,18 +22,15 @@ plugins {
     id 'kotlin-android'
 }
 
-apply plugin: 'obfuscator'
-
-obfuscator {
-    str {
-        packages = ["io.github.nullptrx.library"]
-        implementation = 'io.github.nullptrx.obfuscator.XOR'
-        // random or fixed
-        mode = "random"
-        randomPassword = 32
-        fixedPassword = "abc"
-    }
-}
+// apply plugin: 'obfuscator'
+//
+// obfuscator {
+//     str {
+//         packages = ["io.github.nullptrx.library"]
+//         implementation = 'io.github.nullptrx.obfuscator.XOR'
+//         password = HardCodeKeyGenerator('hi')
+//     }
+// }
 
 android {
     compileSdk 31

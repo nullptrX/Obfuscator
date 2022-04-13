@@ -1,76 +1,49 @@
 package io.github.nullptrx.obfuscator.extension
 
-
+import io.github.nullptrx.obfuscator.kg.IKeyGenerator
+import io.github.nullptrx.obfuscator.kg.RandomKeyGenerator
 import java.lang.reflect.Method
-import java.util.*
+
 
 open class StrExtension {
-  var enabled: Boolean = true
-  var packages: Array<String> = arrayOf()
-  var implementation: String = ""
+    open var enabled: Boolean = true
+    open var packages: Array<String> = arrayOf()
+    open var implementation: String = ""
 
-  // random, fixed
-  var mode: String = "random"
-  var randomPassword: Int = 3
-  var fixedPassword: String = ""
+    open var password: IKeyGenerator = RandomKeyGenerator()
 
-  fun getImplClass(): String {
-    try {
-      return implementation.replace(".", "/")
-    } catch (e: Exception) {
-      throw  RuntimeException(e)
-    }
-  }
-
-  fun getImplMethod(): Method {
-    try {
-      val clazz = Class.forName(implementation)
-      if ("fixed".equals(mode, ignoreCase = true)) {
-        if (fixedPassword.isEmpty()) {
-          try {
-            return clazz.getMethod("e", ByteArray::class.java)
-          } catch (_: Exception) {
-            return clazz.getMethod("e", ByteArray::class.java, String::class.java)
-          }
-        } else {
-          return clazz.getMethod("e", ByteArray::class.java, String::class.java)
+    fun getImplClass(): String {
+        try {
+            return implementation.replace(".", "/")
+        } catch (e: Exception) {
+            throw  RuntimeException(e)
         }
+    }
 
-      } else {
-        if (randomPassword <= 0) {
-          try {
-            return clazz.getMethod("e", ByteArray::class.java)
-          } catch (_: Exception) {
-            return clazz.getMethod("e", ByteArray::class.java, String::class.java)
-          }
-        } else {
-          return clazz.getMethod("e", ByteArray::class.java, String::class.java)
+    fun getImplMethod(): Method {
+        try {
+            val clazz = Class.forName(implementation)
+            if (password.get().isEmpty()) {
+                try {
+                    return clazz.getMethod("e", ByteArray::class.java)
+                } catch (_: Exception) {
+                    return clazz.getMethod("e", ByteArray::class.java, String::class.java)
+                }
+            } else {
+                return clazz.getMethod("e", ByteArray::class.java, String::class.java)
+            }
+        } catch (e: Exception) {
+            if (e is ClassNotFoundException) {
+                throw ClassNotFoundException(e.localizedMessage)
+            } else if (e is NoSuchMethodException) {
+                throw NoSuchMethodException(e.localizedMessage)
+            } else {
+                throw e
+            }
         }
-      }
-
-    } catch (e: Exception) {
-      if (e is ClassNotFoundException) {
-        throw ClassNotFoundException(e.localizedMessage)
-      } else if (e is NoSuchMethodException) {
-        throw NoSuchMethodException(e.localizedMessage)
-      } else {
-        throw e
-      }
     }
-  }
 
-  fun getPassword(): String {
-    if ("fixed".equals(mode, ignoreCase = true)) {
-      return fixedPassword
-    } else {
-      if (randomPassword < -1 || randomPassword > 32) {
-        return ""
-      } else {
-        return UUID.randomUUID().toString()
-          .replace("-", "")
-          .trim()
-          .substring(0, randomPassword)
-      }
+    fun getPassword(): String {
+        return password.get()
     }
-  }
 }

@@ -68,6 +68,7 @@ abstract class ByteTransform(
     return false
   }
 
+  @Deprecated("Deprecated in Java")
   override fun transform(
     context: Context,
     inputs: MutableCollection<TransformInput>,

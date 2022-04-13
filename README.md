@@ -105,6 +105,10 @@ obfuscator {
     // 固定密码值
     fixedPassword = 'abc'
   }
+
+  pkg {
+
+  }
 }
 
 dependencies {
