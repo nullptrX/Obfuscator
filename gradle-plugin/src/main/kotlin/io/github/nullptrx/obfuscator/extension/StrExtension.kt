@@ -1,5 +1,6 @@
 package io.github.nullptrx.obfuscator.extension
 
+import io.github.nullptrx.obfuscator.kg.HardCodeKeyGenerator
 import io.github.nullptrx.obfuscator.kg.IKeyGenerator
 import io.github.nullptrx.obfuscator.kg.RandomKeyGenerator
 import java.lang.reflect.Method
@@ -45,5 +46,13 @@ open class StrExtension {
 
     fun getPassword(): String {
         return password.get()
+    }
+
+    fun random(length: Int = 0): Any {
+        return RandomKeyGenerator(length)
+    }
+
+    fun hardcode(key: String? = null): Any {
+        return HardCodeKeyGenerator(key)
     }
 }

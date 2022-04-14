@@ -27,8 +27,10 @@ obfuscator {
     str {
         packages = ["io.github.nullptrx.app"]
         implementation = 'io.github.nullptrx.obfuscator.XOR'
-        password = Class.forName('io.github.nullptrx.obfuscator.kg.RandomKeyGenerator').newInstance()
+        // password = Class.forName('io.github.nullptrx.obfuscator.kg.RandomKeyGenerator').newInstance()
         // password = new RandomKeyGenerator()
+        password = random(1)
+        // password = hardcode('hi')
     }
 }
 
@@ -46,6 +48,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
