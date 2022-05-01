@@ -99,11 +99,10 @@ obfuscator {
     // 加密库实现
     implementation = 'io.github.nullptrx.obfuscator.XOR'
     // 模式 random(随机生成密码)/fixed(固定字符串密码)
-    mode = "random"
     // 随机密码长度
-    randomPassword = 1
+    password = random(2)
     // 固定密码值
-    fixedPassword = 'abc'
+    // password = hardcode('abc')
   }
 
   pkg {
